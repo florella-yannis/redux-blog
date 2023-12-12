@@ -1,9 +1,33 @@
-import React from "react";
+import React, { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addPost, getPosts } from "../actions/post.action";
 
 const PostForm = () => {
+
+  const form = useRef();
+  const user = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch()
+
+  const handleForm = async (e) => {
+    //async + await permet de recuperer l'id pour crud sans rechargement de page
+    e.preventDefault();
+    // console.log(form);
+    
+    const postData = {
+      author: user.pseudo,
+      title: form.current[0].value,
+      content : form.current[1].value,
+      likes: 0,
+    };
+
+    await dispatch(addPost(postData));
+    dispatch(getPosts());
+    form.current.reset(); 
+  };
+
   return (
     <div className="form-container">
-      <form>
+      <form ref={form} onSubmit={e => handleForm(e)}>
         <input type="text" placeholder="Titre du poste" />
         <textarea placeholder="Postez vos pensées..."></textarea>
         <input type="submit" value="Envoyer" />
