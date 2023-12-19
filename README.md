@@ -1,5 +1,3 @@
-# Cours Redux
-
 ** INSTALLER REDUX **
 npm i -s redux react-redux @reduxjs/toolkit @redux-devtools/extension
 Télécharger Redux DevTools
